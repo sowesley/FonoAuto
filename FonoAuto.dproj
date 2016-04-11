@@ -1,0 +1,196 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{696DB93D-5C4A-49F6-8298-53A7D077302F}</ProjectGuid>
+        <ProjectVersion>15.4</ProjectVersion>
+        <FrameworkType>VCL</FrameworkType>
+        <MainSource>FonoAuto.dpr</MainSource>
+        <Base>True</Base>
+        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <AppType>Application</AppType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+        <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <Icon_MainIcon>FonoAuto_Icon.ico</Icon_MainIcon>
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Locale>1046</VerInfo_Locale>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <SanitizedProjectName>FonoAuto</SanitizedProjectName>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
+        <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
+        <DCC_E>false</DCC_E>
+        <DCC_N>false</DCC_N>
+        <DCC_S>false</DCC_S>
+        <DCC_F>false</DCC_F>
+        <DCC_K>false</DCC_K>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_ExeOutput>C:\Users\Wesley\Documents\fonoauto\App\</DCC_ExeOutput>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <DCC_UsePackage>JvBDE;JvGlobus;frxADO20;frxe20;JvMM;frxIBX20;JvManagedThreads;FireDACSqliteDriver;FireDACDSDriver;DBXSqliteDriver;FireDACPgDriver;fmx;JvDlgs;IndySystem;JvCrypt;TeeDB;tethering;RaizeComponentsVcl;inetdbbde;vclib;DBXInterBaseDriver;DataSnapClient;DataSnapServer;DataSnapCommon;JvNet;DataSnapProviderClient;JvDotNetCtrls;DBXSybaseASEDriver;DbxCommonDriver;vclimg;dbxcds;fsBDE20;DatasnapConnectorsFreePascal;MetropolisUILiveTile;JvXPCtrls;vcldb;vcldsnap;fmxFireDAC;DBXDb2Driver;DBXOracleDriver;CustomIPTransport;JvCore;vclribbon;dsnap;IndyIPServer;fmxase;vcl;IndyCore;DBXMSSQLDriver;IndyIPCommon;CloudService;FmxTeeUI;FireDACIBDriver;CodeSiteExpressPkg;DataSnapFireDAC;FireDACDBXDriver;JvAppFrm;soapserver;JvDB;JvRuntimeDesign;inetdbxpress;fsTee20;fsIBX20;frxTee20;dsnapxml;FireDACInfxDriver;FireDACDb2Driver;JclDeveloperTools;JvDocking;adortl;frxDB20;JvWizards;FireDACASADriver;JvHMI;bindcompfmx;frx20;JvBands;vcldbx;RaizeComponentsVclDb;FireDACODBCDriver;RESTBackendComponents;fsADO20;rtl;dbrtl;DbxClientDriver;FireDACCommon;bindcomp;inetdb;JvPluginSystem;Tee;JclContainers;DBXOdbcDriver;JvCmp;vclFireDAC;frxDBX20;JvSystem;xmlrtl;DataSnapNativeClient;svnui;ibxpress;JvControls;JvTimeFramework;IndyProtocols;DBXMySQLDriver;FireDACCommonDriver;frxBDE20;bindcompdbx;bindengine;vclactnband;soaprtl;FMXTee;TeeUI;bindcompvcl;JvStdCtrls;JvCustom;Jcl;vclie;JvJans;JvPageComps;JvPrintPreview;FireDACADSDriver;vcltouch;VclSmp;FireDACMSSQLDriver;FireDAC;DBXInformixDriver;Intraweb;VCLRESTComponents;DataSnapConnectors;DataSnapServerMidas;dsnapcon;DBXFirebirdDriver;fsDB20;inet;fmxobj;JclVcl;JvPascalInterpreter;FireDACMySQLDriver;soapmidas;vclx;fs20;svn;DBXSybaseASADriver;FireDACOracleDriver;fmxdae;RESTComponents;bdertl;FireDACMSAccDriver;dbexpress;DataSnapIndy10ServerTransport;IndyIPClient;$(DCC_UsePackage)</DCC_UsePackage>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <DCC_UsePackage>FireDACSqliteDriver;FireDACDSDriver;DBXSqliteDriver;FireDACPgDriver;fmx;IndySystem;TeeDB;tethering;RaizeComponentsVcl;vclib;DBXInterBaseDriver;DataSnapClient;DataSnapServer;DataSnapCommon;DataSnapProviderClient;DBXSybaseASEDriver;DbxCommonDriver;vclimg;dbxcds;DatasnapConnectorsFreePascal;MetropolisUILiveTile;vcldb;vcldsnap;fmxFireDAC;DBXDb2Driver;DBXOracleDriver;CustomIPTransport;vclribbon;dsnap;IndyIPServer;fmxase;vcl;IndyCore;DBXMSSQLDriver;IndyIPCommon;CloudService;FmxTeeUI;FireDACIBDriver;DataSnapFireDAC;FireDACDBXDriver;soapserver;inetdbxpress;dsnapxml;FireDACInfxDriver;FireDACDb2Driver;adortl;FireDACASADriver;bindcompfmx;RaizeComponentsVclDb;FireDACODBCDriver;RESTBackendComponents;rtl;dbrtl;DbxClientDriver;FireDACCommon;bindcomp;inetdb;Tee;DBXOdbcDriver;vclFireDAC;xmlrtl;DataSnapNativeClient;ibxpress;IndyProtocols;DBXMySQLDriver;FireDACCommonDriver;bindcompdbx;bindengine;vclactnband;soaprtl;FMXTee;TeeUI;bindcompvcl;vclie;FireDACADSDriver;vcltouch;VclSmp;FireDACMSSQLDriver;FireDAC;DBXInformixDriver;Intraweb;VCLRESTComponents;DataSnapConnectors;DataSnapServerMidas;dsnapcon;DBXFirebirdDriver;inet;fmxobj;FireDACMySQLDriver;soapmidas;vclx;DBXSybaseASADriver;FireDACOracleDriver;fmxdae;RESTComponents;FireDACMSAccDriver;dbexpress;DataSnapIndy10ServerTransport;IndyIPClient;$(DCC_UsePackage)</DCC_UsePackage>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+        <DCC_DebugDCUs>true</DCC_DebugDCUs>
+        <DCC_Optimize>false</DCC_Optimize>
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+        <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
+        <DCC_RemoteDebug>true</DCC_RemoteDebug>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <VerInfo_MajorVer>2016</VerInfo_MajorVer>
+        <VerInfo_Build>1</VerInfo_Build>
+        <VerInfo_MinorVer>2</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=WS Soluções;FileDescription=;FileVersion=2016.2.21.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=WS Soluções - FonoAuto Agenda;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Release>21</VerInfo_Release>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <DCC_RemoteDebug>false</DCC_RemoteDebug>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="Forms\UDefault.pas">
+            <Form>FDefault</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms\UDM.pas">
+            <Form>DM</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Classes\USessao.pas"/>
+        <DCCReference Include="Classes\Utils.MD5.pas"/>
+        <DCCReference Include="Forms\UPadrao.pas">
+            <Form>FPadrao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms\UPrincipal.pas">
+            <Form>FPrincipal</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms\ULogin.pas">
+            <Form>FLogin</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms\UPacientes.pas">
+            <Form>FPacientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Classes\Utils.Helper.pas"/>
+        <DCCReference Include="Classes\Utils.Util.pas"/>
+        <DCCReference Include="Classes\Utils.Types.pas"/>
+        <DCCReference Include="Classes\Utils.Message.pas"/>
+        <DCCReference Include="Classes\obj.Pessoas.pas"/>
+        <DCCReference Include="Classes\obj.Cidades.pas"/>
+        <DCCReference Include="Classes\obj.Paises.pas"/>
+        <DCCReference Include="Classes\obj.Documentos.pas"/>
+        <DCCReference Include="Forms\UMensagem.pas">
+            <Form>FMensagem</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms\UConPadrao.pas">
+            <Form>FConPadrao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms\UConPacientes.pas">
+            <Form>FConPacientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Classes\Utils.Consulta.pas"/>
+        <DCCReference Include="Forms\UConCidades.pas">
+            <Form>FConCidades</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms\UConPaises.pas">
+            <Form>FConPaises</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Forms\UExames.pas">
+            <Form>FExames</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Classes\obj.Audiometria.pas"/>
+        <DCCReference Include="Forms\UUsuarios.pas">
+            <Form>FUsuarios</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Classes\Obj.Usuarios.pas"/>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">FonoAuto.dpr</Source>
+                </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k200.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp200.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <Deployment/>
+            <Platforms>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+    <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+</Project>

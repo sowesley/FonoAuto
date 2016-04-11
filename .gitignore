@@ -1,0 +1,5 @@
+Forms/__history/
+*.dcu
+__history/
+*.local
+BD/
