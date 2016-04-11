@@ -5,12 +5,12 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UDefault, Vcl.StdCtrls, Vcl.Mask, System.Types, System.Generics.Collections,
-  RzEdit, RzBtnEdt, Vcl.ExtCtrls, RzPanel, Utils.Consulta, JvExMask, StrUtils,
+  RzEdit, RzBtnEdt, Vcl.ExtCtrls, RzPanel, Utils.Consulta, JvExMask, StrUtils, IWSystem,
   JvToolEdit, obj.Pessoas, CurvyControls, AdvGlowButton, Utils.Util,
   htmlbtns, VclTee.TeeGDIPlus, VCLTee.TeEngine, VCLTee.TeeProcs,
   VCLTee.Chart, VCLTee.Series, JvExControls, JvChart, Data.DB,
   Datasnap.DBClient, VCLTee.DBChart, Utils.Message, Utils.Types,
-  dxGDIPlusClasses, obj.Audiometria, AdvScrollBox, RzTabs;
+  dxGDIPlusClasses, obj.Audiometria, AdvScrollBox, RzTabs, frxClass;
 
 type
   TFExames = class(TFDefault)
@@ -304,13 +304,6 @@ type
     lbl13: TLabel;
     edtCmpD: TCurvyEdit;
     btnAceiteDireito: TAdvGlowButton;
-    edtPpoE: TCurvyEdit;
-    lbl14: TLabel;
-    lbl15: TLabel;
-    edtPngE: TCurvyEdit;
-    lbl16: TLabel;
-    edtCmpE: TCurvyEdit;
-    btnAceiteEsquerdo: TAdvGlowButton;
     RzPanel22: TRzPanel;
     edtDecayE4K: TCurvyEdit;
     edtDecayE2K: TCurvyEdit;
@@ -371,6 +364,14 @@ type
     chtEsquerda: TDBChart;
     srsAudioEsquerda: TFastLineSeries;
     srsVAE: TFastLineSeries;
+    frxAudiometria: TfrxReport;
+    lbl14: TLabel;
+    lbl15: TLabel;
+    lbl16: TLabel;
+    edtPpoE: TCurvyEdit;
+    edtPngE: TCurvyEdit;
+    edtCmpE: TCurvyEdit;
+    btnAceiteEsquerdo: TAdvGlowButton;
     procedure edtPacCodButtonClick(Sender: TObject);
     procedure edtPacCodKeyPress(Sender: TObject; var Key: Char);
     procedure edtPacCodEnter(Sender: TObject);
@@ -461,7 +462,7 @@ implementation
 
 {$R *.dfm}
 
-uses UPrincipal;
+uses UPrincipal, Utils.Helper;
 
 procedure TFExames.ArmazenaPontosGrafico;
 var
@@ -732,48 +733,110 @@ procedure TFExames.btnImprimirClick(Sender: TObject);
 var
   R: TRect;
   Bmp: TBitmap;
+  vPath: string;
+  vFileName: string;
+  Img: TfrxPictureView;
 begin
+  frxAudiometria.LoadFromFile(Sessao.Config.CaminhoRelatorios + 'Audiometria.fr3');
+  vPath := Sessao.Config.CaminhoGraficos;
+
+  if not DirectoryExists(vPath) then
+    ForceDirectories(vPath);
+
+  //Gráfico Audiometria Direita
   Bmp := TBitmap.Create;
   try
     R := Rect(0, 0, chtDireita.Width, chtDireita.Height);
     Bmp.SetSize(chtDireita.Width, chtDireita.Height);
-//    chtDireita.Canvas.RenderToBitmap(Bmp, R);
     Bmp.Canvas.CopyRect(R, pnlChtDireita.Canvas, R);
-    Bmp.SaveToFile('C:\Temp\Grafico.bmp');
+
+    vFileName := 'AudioDireita_' + edtPacCod.Text + '_' + FormatDateTime('YYYYMMDD', edtData.Date) + '.bmp';
+
+    Bmp.SaveToFile(vPath + vFileName);
+
+    Img := TfrxPictureView(frxAudiometria.FindObject('AudioDireito'));
+
+    if Img <> nil then
+      Img.Picture.LoadFromFile(vPath + vFileName);
   finally
     FreeAndNil(Bmp);
   end;
+
+  //Gráfico Audiometria Esquerda
+  Bmp := TBitmap.Create;
+  try
+    R := Rect(0, 0, chtEsquerda.Width, chtEsquerda.Height);
+    Bmp.SetSize(chtEsquerda.Width, chtEsquerda.Height);
+    Bmp.Canvas.CopyRect(R, pnlChtEsquerda.Canvas, R);
+
+    vFileName := 'AudioEsquerda_' + edtPacCod.Text + '_' + FormatDateTime('YYYYMMDD', edtData.Date) + '.bmp';
+
+    Bmp.SaveToFile(vPath + vFileName);
+
+    Img := TfrxPictureView(frxAudiometria.FindObject('AudioEsquerdo'));
+
+    if Img <> nil then
+      Img.Picture.LoadFromFile(vPath + vFileName);
+  finally
+    FreeAndNil(Bmp);
+  end;
+
+  //Gráfico Imitanciometria Direita
+  vFileName := 'Imitanciometria_' + edtPacCod.Text + '_' + FormatDateTime('YYYYMMDD', edtData.Date) + '.bmp';
+  chtImitaDireito.SaveToBitmapFile(vPath + vFileName);
+
+  Img := TfrxPictureView(frxAudiometria.FindObject('Imitanciometria'));
+
+  if Img <> nil then
+    Img.Picture.LoadFromFile(vPath + vFileName);
+
+  frxAudiometria.ShowReport;
 end;
 
 procedure TFExames.btnSalvarClick(Sender: TObject);
-var
-  LogoAudio: TLogoAudiometria;
 begin
+  if Trim(edtPacCod.Text) = '' then
+  begin
+    TMensagens.ShowMessage('Informe o paciente!', tmAtencao);
+    edtPacCod.SetFocus;
+    Exit;
+  end;
+
+  if edtData.Date = 0 then
+  begin
+    TMensagens.ShowMessage('Informe a Data do Exame!', tmAtencao);
+    edtData.SetFocus;
+    Exit;
+  end;
+
   if TMensagens.ShowMessage('Confirma os dados do exame?', tmQuestao, tbSimNao) = mrNo then
     Exit;
 
   if not Assigned(FExame) then
     FExame := TAudiometria.Create;
 
+  if not Assigned(FExame.LogoAudio) then
+    FExame.LogoAudio := TLogoAudiometria.Create;
+
   Exame.IdPessoa  := StrToInt(edtPacCod.Text);
   Exame.Data      := edtData.Date;
   Exame.IdUsuario := Sessao.User.Codigo;
 
-  LogoAudio := TLogoAudiometria.Create;
-  LogoAudio.SrtDireito    := StrToIntDef(edtSRTDireito.Text, -1);
-  LogoAudio.SrtEsquerdo   := StrToIntDef(edtSRTEsquerdo.Text, -1);
-  LogoAudio.IrfDireito    := StrToIntDef(edtIRFDireito.Text, -1);
-  LogoAudio.IrfEsquerdo   := StrToIntDef(edtIRFEsquerdo.Text, -1);
-  LogoAudio.MonoDireito   := StrToIntDef(edtMonoDireito.Text, -1);
-  LogoAudio.MonoEsquerdo  := StrToIntDef(edtMonoEsquerdo.Text, -1);
-  LogoAudio.DissDireito   := StrToIntDef(edtDissDireito.Text, -1);
-  LogoAudio.DissEsquerdo  := StrToIntDef(edtDissEsquerdo.Text, -1);
-  LogoAudio.Weber500      := Trim(edtWeber500.Text);
-  LogoAudio.Weber1K       := Trim(edtWeber1K.Text);
-  LogoAudio.Weber2K       := Trim(edtWeber2K.Text);
-  LogoAudio.Weber4K       := Trim(edtWeber4K.Text);
-  LogoAudio.LaudoDireito  := Trim(mmoLaudoDireito.Text);
-  LogoAudio.LaudoEsquerdo := Trim(mmoLaudoEsquerdo.Text);
+  FExame.LogoAudio := TLogoAudiometria.Create;
+  FExame.LogoAudio.SrtDireito    := StrToIntDef(edtSRTDireito.Text, -1);
+  FExame.LogoAudio.SrtEsquerdo   := StrToIntDef(edtSRTEsquerdo.Text, -1);
+  FExame.LogoAudio.IrfDireito    := StrToIntDef(edtIRFDireito.Text, -1);
+  FExame.LogoAudio.IrfEsquerdo   := StrToIntDef(edtIRFEsquerdo.Text, -1);
+  FExame.LogoAudio.MonoDireito   := StrToIntDef(edtMonoDireito.Text, -1);
+  FExame.LogoAudio.MonoEsquerdo  := StrToIntDef(edtMonoEsquerdo.Text, -1);
+  FExame.LogoAudio.DissDireito   := StrToIntDef(edtDissDireito.Text, -1);
+  FExame.LogoAudio.DissEsquerdo  := StrToIntDef(edtDissEsquerdo.Text, -1);
+  FExame.LogoAudio.Weber500      := Trim(edtWeber500.Text);
+  FExame.LogoAudio.Weber1K       := Trim(edtWeber1K.Text);
+  FExame.LogoAudio.Weber2K       := Trim(edtWeber2K.Text);
+  FExame.LogoAudio.Weber4K       := Trim(edtWeber4K.Text);
+  FExame.LogoAudio.LaudoDireito  := Trim(mmoLaudoDireito.Text);
+  FExame.LogoAudio.LaudoEsquerdo := Trim(mmoLaudoEsquerdo.Text);
 
   SalvarRegistro;
 end;
@@ -962,12 +1025,12 @@ begin
 
   if Valor <> -1 then
   begin
-//    Dado := TReflexo.Create;
-//    Dado.Orelha := oDireita;
-//    Dado.Valor  := Valor;
-//    Dado.Tipo   := NovoTipo;
-//
-//    ImitaDireito.Add(Dado);
+    Dado := TImitanciometria.Create;
+    Dado.Orelha := oDireita;
+    Dado.Valor  := Valor;
+    Dado.Tipo   := NovoTipo;
+
+    ImitaDireito.Add(Dado);
   end;
 end;
 
@@ -1008,12 +1071,12 @@ begin
 
   if Valor <> -1 then
   begin
-//    Dado := TReflexo.Create;
-//    Dado.Orelha := oDireita;
-//    Dado.Valor  := Valor;
-//    Dado.Tipo   := NovoTipo;
-//
-//    ImitaEsquerdo.Add(Dado);
+    Dado := TImitanciometria.Create;
+    Dado.Orelha := oDireita;
+    Dado.Valor  := Valor;
+    Dado.Tipo   := NovoTipo;
+
+    ImitaEsquerdo.Add(Dado);
   end;
 end;
 
@@ -1696,12 +1759,12 @@ begin
 
   if Valor <> -1 then
   begin
-//    Dado := TReflexo.Create;
-//    Dado.Orelha := oDireita;
-//    Dado.Valor  := Valor;
-//    Dado.Tipo   := NovoTipo;
-//
-//    ImitaDireito.Add(Dado);
+    Dado := TImitanciometria.Create;
+    Dado.Orelha := oDireita;
+    Dado.Valor  := Valor;
+    Dado.Tipo   := NovoTipo;
+
+    ImitaDireito.Add(Dado);
   end;
 end;
 
@@ -1733,12 +1796,12 @@ begin
 
   if Valor <> -1 then
   begin
-//    Dado := TReflexo.Create;
-//    Dado.Orelha := oDireita;
-//    Dado.Valor  := Valor;
-//    Dado.Tipo   := NovoTipo;
-//
-//    ImitaEsquerdo.Add(Dado);
+    Dado := TImitanciometria.Create;
+    Dado.Orelha := oDireita;
+    Dado.Valor  := Valor;
+    Dado.Tipo   := NovoTipo;
+
+    ImitaEsquerdo.Add(Dado);
   end;
 end;
 
@@ -2961,20 +3024,87 @@ var
   Script: TStringBuilder;
   I: Integer;
   Marca: TMarcador;
+  Reflexo: TReflexo;
+  Imita: TImitanciometria;
 begin
   if not Assigned(FMarcadores) then
     Exit;
 
+  if not Assigned(FImitaEsquerdo) then
+    Exit;
+
+  if not Assigned(FImitaDireito) then
+    Exit;
+
+  if not Assigned(FDadosReflexo) then
+    Exit;
+
   Script := TStringBuilder.Create;
   try
+    {$REGION ' Exclui Registros '}
+      Sessao.ExecSql('DELETE FROM REFLEXO_ACUSTICO ' + sLineBreak +
+        'WHERE ID_PESSOA = ' + Exame.IdPessoa.ToString + sLineBreak +
+        '  AND SEQ = ' + Exame.Seq.ToString);
+
+      Sessao.ExecSql('DELETE FROM AUDIOMETRIA_DADOS ' + sLineBreak +
+        'WHERE ID_PESSOA = ' + Exame.IdPessoa.ToString + sLineBreak +
+        '  AND SEQ = ' + Exame.Seq.ToString);
+
+      Sessao.ExecSql('DELETE FROM IMITANCIOMETRIA ' + sLineBreak +
+        'WHERE ID_PESSOA = ' + Exame.IdPessoa.ToString + sLineBreak +
+        '  AND SEQ = ' + Exame.Seq.ToString);
+
+      Sessao.ExecSql('DELETE FROM LOGOAUDIOMETRIA ' + sLineBreak +
+        'WHERE ID_PESSOA = ' + Exame.IdPessoa.ToString + sLineBreak +
+        '  AND SEQ = ' + Exame.Seq.ToString);
+    {$ENDREGION}
+
+    Script.Append('UPDATE OR INSERT INTO AUDIOMETRIA (ID_PESSOA, SEQ, DATA, ID_USUARIO) ').Append(sLineBreak)
+          .Append('VALUES ([ID_PESSOA], [SEQ], [DATA], [ID_USUARIO]) MATCHING (ID_PESSOA, DATA); ');
+
+    Script.Replace('[ID_PESSOA]', Exame.IdPessoa.ToString);
+    Script.Replace('[SEQ]', Exame.Seq.ToString);
+    Script.Replace('[DATA]', TUteis.DataSQL(Exame.Data, False));
+    Script.Replace('[ID_USUARIO]', Exame.IdUsuario.ToString);
+
+    Sessao.ExecSql(Script.ToString);
+
+    Script.Clear;
+
+    Script.Append('INSERT INTO LOGOAUDIOMETRIA (ID_PESSOA, SEQ, SRT_DIREITO, SRT_ESQUERDO, IRF_DIREITO, ').Append(sLineBreak)
+          .Append('  IRF_ESQUERDO, MONO_DIREITO, MONO_ESQUERDO, DISS_DIREITO, DISS_ESQUERDO, ').Append(sLineBreak)
+          .Append('  WEBER_500, WEBER_1K, WEBER_2K, WEBER_4K, LAUDO_DIREITO, LAUDO_ESQUERDO) ').Append(sLineBreak)
+          .Append('VALUES ([ID_PESSOA], [SEQ], [SRT_DIREITO], [SRT_ESQUERDO], [IRF_DIREITO], ').Append(sLineBreak)
+          .Append('  [IRF_ESQUERDO], [MONO_DIREITO], [MONO_ESQUERDO], [DISS_DIREITO], [DISS_ESQUERDO], ').Append(sLineBreak)
+          .Append('  [WEBER_500], [WEBER_1K], [WEBER_2K], [WEBER_4K], [LAUDO_DIREITO], [LAUDO_ESQUERDO]); ');
+
+    Script.Replace('[ID_PESSOA]', Exame.IdPessoa.ToString);
+    Script.Replace('[SEQ]', Exame.Seq.ToString);
+    Script.Replace('[SRT_DIREITO]', Exame.LogoAudio.SrtDireito.ToString);
+    Script.Replace('[SRT_ESQUERDO]', Exame.LogoAudio.SrtEsquerdo.ToString);
+    Script.Replace('[IRF_DIREITO]', Exame.LogoAudio.IrfDireito.ToString);
+    Script.Replace('[IRF_ESQUERDO]', Exame.LogoAudio.IrfEsquerdo.ToString);
+    Script.Replace('[MONO_DIREITO]', Exame.LogoAudio.MonoDireito.ToString);
+    Script.Replace('[MONO_ESQUERDO]', Exame.LogoAudio.MonoEsquerdo.ToString);
+    Script.Replace('[DISS_DIREITO]', Exame.LogoAudio.DissDireito.ToString);
+    Script.Replace('[DISS_ESQUERDO]', Exame.LogoAudio.DissEsquerdo.ToString);
+    Script.Replace('[WEBER_500]', Exame.LogoAudio.Weber500.QuotedString);
+    Script.Replace('[WEBER_1K]', Exame.LogoAudio.Weber1K.QuotedString);
+    Script.Replace('[WEBER_2K]', Exame.LogoAudio.Weber2K.QuotedString);
+    Script.Replace('[WEBER_4K]', Exame.LogoAudio.Weber4K.QuotedString);
+    Script.Replace('[LAUDO_DIREITO]', Exame.LogoAudio.LaudoDireito.QuotedString);
+    Script.Replace('[LAUDO_ESQUERDO]', Exame.LogoAudio.LaudoEsquerdo.QuotedString);
+
+    Sessao.ExecSql(Script.ToString);
+
     for I := 0 to Marcadores.Count -1 do
     begin
       Marca := Marcadores[I];
 
       Script.Clear;
 
-      Script.Append('UPDATE OR INSERT INTO AUDIOMETRIA_DADOS (ID_PESSOA, SEQ, ORELHA, TIPO, FREQUENCIA, VALOR, SEM_RESPOSTA) ').Append(sLineBreak)
-            .Append('VALUES ([ID_PESSOA], [SEQ], [ORELHA], [TIPO], [FREQUENCIA], [VALOR], [SEM_RESPOSTA]) MATCHING (ID_PESSOA, SEQ, ORELHA, TIPO, FREQUENCIA); ');
+      Script.Append('INSERT INTO AUDIOMETRIA_DADOS (ID_PESSOA, SEQ, ORELHA, TIPO, FREQUENCIA, VALOR, SEM_RESPOSTA) ').Append(sLineBreak)
+            .Append('VALUES ([ID_PESSOA], [SEQ], [ORELHA], [TIPO], [FREQUENCIA], [VALOR], [SEM_RESPOSTA]); ');
 
       Script.Replace('[ID_PESSOA]', Exame.IdPessoa.ToString);
       Script.Replace('[SEQ]', Exame.Seq.ToString);
@@ -2983,6 +3113,61 @@ begin
       Script.Replace('[FREQUENCIA]', Marca.Frequencia.ToInteger.ToString);
       Script.Replace('[VALOR]', Marca.Intensidade.Value.ToString);
       Script.Replace('[SEM_RESPOSTA]', IfThen(Marca.SemResposta, 'S', 'N').QuotedString);
+
+      Sessao.ExecSql(Script.ToString);
+    end;
+
+    for I := 0 to DadosReflexo.Count -1 do
+    begin
+      Reflexo := DadosReflexo[I];
+
+      Script.Clear;
+
+      Script.Append('INSERT INTO REFLEXO_ACUSTICO (ID_PESSOA, SEQ, ORELHA, TIPO, FREQUENCIA, VALOR) ').Append(sLineBreak)
+            .Append('VALUES ([ID_PESSOA], [SEQ], [ORELHA], [TIPO], [FREQUENCIA], [VALOR]); ');
+
+      Script.Replace('[ID_PESSOA]', Exame.IdPessoa.ToString);
+      Script.Replace('[SEQ]', Exame.Seq.ToString);
+      Script.Replace('[ORELHA]', Reflexo.Orelha.ToString.QuotedString);
+      Script.Replace('[TIPO]', Integer(Reflexo.Tipo).ToString);
+      Script.Replace('[FREQUENCIA]', Reflexo.Frequencia.ToInteger.ToString);
+      Script.Replace('[VALOR]', Reflexo.Valor.ToString);
+
+      Sessao.ExecSql(Script.ToString);
+    end;
+
+    for I := 0 to ImitaDireito.Count -1 do
+    begin
+      Imita := ImitaDireito[I];
+
+      Script.Clear;
+
+      Script.Append('INSERT INTO IMITANCIOMETRIA (ID_PESSOA, SEQ, ORELHA, TIPO, VALOR) ').Append(sLineBreak)
+            .Append('VALUES ([ID_PESSOA], [SEQ], [ORELHA], [TIPO], [VALOR]); ');
+
+      Script.Replace('[ID_PESSOA]', Exame.IdPessoa.ToString);
+      Script.Replace('[SEQ]', Exame.Seq.ToString);
+      Script.Replace('[ORELHA]', Imita.Orelha.ToString.QuotedString);
+      Script.Replace('[TIPO]', Imita.Tipo.ToString.QuotedString);
+      Script.Replace('[VALOR]', FloatToSQL(Imita.Valor));
+
+      Sessao.ExecSql(Script.ToString);
+    end;
+
+    for I := 0 to ImitaEsquerdo.Count -1 do
+    begin
+      Imita := ImitaEsquerdo[I];
+
+      Script.Clear;
+
+      Script.Append('INSERT INTO IMITANCIOMETRIA (ID_PESSOA, SEQ, ORELHA, TIPO, VALOR) ').Append(sLineBreak)
+            .Append('VALUES ([ID_PESSOA], [SEQ], [ORELHA], [TIPO], [VALOR]); ');
+
+      Script.Replace('[ID_PESSOA]', Exame.IdPessoa.ToString);
+      Script.Replace('[SEQ]', Exame.Seq.ToString);
+      Script.Replace('[ORELHA]', Imita.Orelha.ToString.QuotedString);
+      Script.Replace('[TIPO]', Imita.Tipo.ToString.QuotedString);
+      Script.Replace('[VALOR]', FloatToSQL(Imita.Valor));
 
       Sessao.ExecSql(Script.ToString);
     end;

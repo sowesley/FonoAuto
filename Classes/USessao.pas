@@ -22,6 +22,9 @@ type
     procedure SetMenuAtivo(const Value: Boolean);
     procedure SetMaxTempoReserva(const Value: Integer);
     function getCaminhoImagens: string;
+    function getCaminhoApp: string;
+    function getCaminhoRelatorios: string;
+    function getCaminhoGraficos: string;
   public
     property Servidor: string read FServidor write setServidor;
     property Usuario: string read FUsuario write setUsuario;
@@ -31,6 +34,9 @@ type
     property Logotipo: string read FLogotipo write SetLogotipo;
     property MaxTempoReserva: Integer read FMaxTempoReserva write SetMaxTempoReserva;
     property CaminhoImagens: string read getCaminhoImagens;
+    property CaminhoApp: string read getCaminhoApp;
+    property CaminhoRelatorios: string read getCaminhoRelatorios;
+    property CaminhoGraficos: string read getCaminhoGraficos;
   end;
 
   TUsuarios = record
@@ -152,9 +158,24 @@ end;
 
 { TConfig }
 
+function TConfig.getCaminhoApp: string;
+begin
+  Result := gsAppPath;
+end;
+
+function TConfig.getCaminhoGraficos: string;
+begin
+  Result := CaminhoApp + 'Graficos\';
+end;
+
 function TConfig.getCaminhoImagens: string;
 begin
-  Result := gsAppPath + 'Imagens\';
+  Result := CaminhoApp + 'Imagens\';
+end;
+
+function TConfig.getCaminhoRelatorios: string;
+begin
+  Result := CaminhoApp + 'Relatorios\';
 end;
 
 procedure TConfig.setCaminhoBanco(const Value: string);
