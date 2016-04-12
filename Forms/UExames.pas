@@ -790,6 +790,67 @@ begin
   if Img <> nil then
     Img.Picture.LoadFromFile(vPath + vFileName);
 
+  frxAudiometria.Variables['Paciente']      := QuotedStr(Trim(edtPacNome.Text));
+  frxAudiometria.Variables['Data']          := QuotedStr(edtData.Text);
+  frxAudiometria.Variables['srtDireita']    := QuotedStr(Trim(edtSRTDireito.Text));
+  frxAudiometria.Variables['srtEsquerda']   := QuotedStr(Trim(edtSRTEsquerdo.Text));
+  frxAudiometria.Variables['irfDireita']    := QuotedStr(Trim(edtIRFDireito.Text));
+  frxAudiometria.Variables['irfEsquerda']   := QuotedStr(Trim(edtIRFEsquerdo.Text));
+  frxAudiometria.Variables['monoDireita']   := QuotedStr(Trim(edtMonoDireito.Text));
+  frxAudiometria.Variables['monoEsquerda']  := QuotedStr(Trim(edtMonoEsquerdo.Text));
+  frxAudiometria.Variables['dissDireita']   := QuotedStr(Trim(edtDissDireito.Text));
+  frxAudiometria.Variables['dissEsquerda']  := QuotedStr(Trim(edtDissEsquerdo.Text));
+  frxAudiometria.Variables['w500']          := QuotedStr(Trim(edtWeber500.Text));
+  frxAudiometria.Variables['w1K']           := QuotedStr(Trim(edtWeber1K.Text));
+  frxAudiometria.Variables['w2K']           := QuotedStr(Trim(edtWeber2K.Text));
+  frxAudiometria.Variables['w4K']           := QuotedStr(Trim(edtWeber4K.Text));
+  frxAudiometria.Variables['laudoDireita']  := QuotedStr(Trim(mmoLaudoDireito.Text));
+  frxAudiometria.Variables['laudoEsquerda'] := QuotedStr(Trim(mmoLaudoEsquerdo.Text));
+  frxAudiometria.Variables['Cidade']        := QuotedStr('Colatina-ES');
+  frxAudiometria.Variables['Medico']        := QuotedStr('ERIKA F. G. TASCA');
+  frxAudiometria.Variables['CRF']           := QuotedStr('CRFa 3288-ES');
+
+  frxAudiometria.Variables['limiarD500'] := QuotedStr(Trim(edtLimiarD500.Text));
+  frxAudiometria.Variables['limiarD1K']  := QuotedStr(Trim(edtLimiarD1K.Text));
+  frxAudiometria.Variables['limiarD2K']  := QuotedStr(Trim(edtLimiarD2K.Text));
+  frxAudiometria.Variables['limiarD4K']  := QuotedStr(Trim(edtLimiarD4K.Text));
+  frxAudiometria.Variables['contraD500'] := QuotedStr(Trim(edtAFDContra500.Text));
+  frxAudiometria.Variables['contraD1K']  := QuotedStr(Trim(edtAFDContra1K.Text));
+  frxAudiometria.Variables['contraD2K']  := QuotedStr(Trim(edtAFDContra2K.Text));
+  frxAudiometria.Variables['contraD4K']  := QuotedStr(Trim(edtAFDContra4K.Text));
+  frxAudiometria.Variables['diferD500']  := QuotedStr(Trim(edtDiferD500.Text));
+  frxAudiometria.Variables['diferD1K']   := QuotedStr(Trim(edtDiferD1K.Text));
+  frxAudiometria.Variables['diferD2K']   := QuotedStr(Trim(edtDiferD2K.Text));
+  frxAudiometria.Variables['diferD4K']   := QuotedStr(Trim(edtDiferD4K.Text));
+  frxAudiometria.Variables['ipsiD500']   := QuotedStr(Trim(edtAFDIpsi500.Text));
+  frxAudiometria.Variables['ipsiD1K']    := QuotedStr(Trim(edtAFDIpsi1K.Text));
+  frxAudiometria.Variables['ipsiD2K']    := QuotedStr(Trim(edtAFDIpsi2K.Text));
+  frxAudiometria.Variables['ipsiD4K']    := QuotedStr(Trim(edtAFDIpsi4K.Text));
+  frxAudiometria.Variables['decayD500']  := QuotedStr(Trim(edtDecayD500.Text));
+  frxAudiometria.Variables['decayD1K']   := QuotedStr(Trim(edtDecayD1K.Text));
+  frxAudiometria.Variables['decayD2K']   := QuotedStr(Trim(edtDecayD2K.Text));
+  frxAudiometria.Variables['decayD4K']   := QuotedStr(Trim(edtDecayD4K.Text));
+  frxAudiometria.Variables['limiarE500'] := QuotedStr(Trim(edtLimiarE500.Text));
+  frxAudiometria.Variables['limiarE1K']  := QuotedStr(Trim(edtLimiarE1K.Text));
+  frxAudiometria.Variables['limiarE2K']  := QuotedStr(Trim(edtLimiarE2K.Text));
+  frxAudiometria.Variables['limiarE4K']  := QuotedStr(Trim(edtLimiarE4K.Text));
+  frxAudiometria.Variables['contraE500'] := QuotedStr(Trim(edtAFEContra500.Text));
+  frxAudiometria.Variables['contraE1K']  := QuotedStr(Trim(edtAFEContra1K.Text));
+  frxAudiometria.Variables['contraE2K']  := QuotedStr(Trim(edtAFEContra2K.Text));
+  frxAudiometria.Variables['contraE4K']  := QuotedStr(Trim(edtAFEContra4K.Text));
+  frxAudiometria.Variables['diferE500']  := QuotedStr(Trim(edtDiferE500.Text));
+  frxAudiometria.Variables['diferE1K']   := QuotedStr(Trim(edtDiferE1K.Text));
+  frxAudiometria.Variables['diferE2K']   := QuotedStr(Trim(edtDiferE2K.Text));
+  frxAudiometria.Variables['diferE4K']   := QuotedStr(Trim(edtDiferE4K.Text));
+  frxAudiometria.Variables['ipsiE500']   := QuotedStr(Trim(edtAFEIpsi500.Text));
+  frxAudiometria.Variables['ipsiE1K']    := QuotedStr(Trim(edtAFEIpsi1K.Text));
+  frxAudiometria.Variables['ipsiE2K']    := QuotedStr(Trim(edtAFEIpsi2K.Text));
+  frxAudiometria.Variables['ipsiE4K']    := QuotedStr(Trim(edtAFEIpsi4K.Text));
+  frxAudiometria.Variables['decayE500']  := QuotedStr(Trim(edtDecayE500.Text));
+  frxAudiometria.Variables['decayE1K']   := QuotedStr(Trim(edtDecayE1K.Text));
+  frxAudiometria.Variables['decayE2K']   := QuotedStr(Trim(edtDecayE2K.Text));
+  frxAudiometria.Variables['decayE4K']   := QuotedStr(Trim(edtDecayE4K.Text));
+
   frxAudiometria.ShowReport;
 end;
 

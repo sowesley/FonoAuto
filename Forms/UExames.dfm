@@ -1,16 +1,12 @@
 inherited FExames: TFExames
   BorderStyle = bsNone
   Caption = 'Exames por Paciente'
-  ClientHeight = 635
-  ClientWidth = 1311
   FormStyle = fsMDIChild
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 1327
-  ExplicitHeight = 673
   PixelsPerInch = 96
   TextHeight = 13
   object imgDVA: TImage
@@ -255,7 +251,7 @@ inherited FExames: TFExames
   object grp4: TRzGroupBox
     Left = 0
     Top = 0
-    Width = 1311
+    Width = 1313
     Height = 50
     Align = alTop
     Caption = 'Informa'#231#245'es do Paciente'
@@ -267,7 +263,7 @@ inherited FExames: TFExames
     GroupStyle = gsUnderline
     TabOrder = 0
     Transparent = True
-    ExplicitWidth = 1293
+    ExplicitWidth = 1295
     object btnImprimir: TAdvGlowButton
       AlignWithMargins = True
       Left = 983
@@ -482,18 +478,18 @@ inherited FExames: TFExames
   object pnl10: TRzPanel
     Left = 0
     Top = 50
-    Width = 1311
-    Height = 585
+    Width = 1313
+    Height = 584
     Align = alClient
     BorderOuter = fsNone
     TabOrder = 1
-    ExplicitWidth = 1293
+    ExplicitWidth = 1295
     ExplicitHeight = 547
     object pgcExames: TRzPageControl
       Left = 0
       Top = 0
       Width = 1157
-      Height = 585
+      Height = 584
       Hint = ''
       ActivePage = tsLogoAudiometria
       Align = alLeft
@@ -519,7 +515,7 @@ inherited FExames: TFExames
           Left = 0
           Top = 0
           Width = 1130
-          Height = 583
+          Height = 582
           Align = alLeft
           BorderOuter = fsNone
           TabOrder = 0
@@ -528,7 +524,7 @@ inherited FExames: TFExames
             Left = 510
             Top = 0
             Width = 110
-            Height = 583
+            Height = 582
             Align = alLeft
             BorderOuter = fsNone
             TabOrder = 0
@@ -693,7 +689,7 @@ inherited FExames: TFExames
               Left = 3
               Top = 145
               Width = 104
-              Height = 435
+              Height = 434
               Align = alClient
               BorderOuter = fsNone
               TabOrder = 1
@@ -873,7 +869,7 @@ inherited FExames: TFExames
             Left = 5
             Top = 5
             Width = 505
-            Height = 573
+            Height = 572
             Margins.Left = 5
             Margins.Top = 5
             Margins.Right = 0
@@ -886,7 +882,7 @@ inherited FExames: TFExames
               Left = 7
               Top = 139
               Width = 491
-              Height = 427
+              Height = 426
               Margins.Left = 5
               Margins.Top = 5
               Margins.Right = 5
@@ -913,7 +909,7 @@ inherited FExames: TFExames
                 Left = 2
                 Top = 15
                 Width = 487
-                Height = 410
+                Height = 409
                 Align = alClient
                 BorderOuter = fsNone
                 TabOrder = 0
@@ -922,7 +918,7 @@ inherited FExames: TFExames
                   Left = 0
                   Top = 0
                   Width = 487
-                  Height = 410
+                  Height = 409
                   Title.Text.Strings = (
                     'TDBChart')
                   Title.Visible = False
@@ -3217,7 +3213,7 @@ inherited FExames: TFExames
             Left = 620
             Top = 5
             Width = 505
-            Height = 573
+            Height = 572
             Margins.Left = 0
             Margins.Top = 5
             Margins.Right = 5
@@ -3230,7 +3226,7 @@ inherited FExames: TFExames
               Left = 7
               Top = 139
               Width = 491
-              Height = 427
+              Height = 426
               Margins.Left = 5
               Margins.Top = 5
               Margins.Right = 5
@@ -3257,7 +3253,7 @@ inherited FExames: TFExames
                 Left = 2
                 Top = 15
                 Width = 487
-                Height = 410
+                Height = 409
                 Align = alClient
                 BorderOuter = fsNone
                 TabOrder = 0
@@ -3266,7 +3262,7 @@ inherited FExames: TFExames
                   Left = 0
                   Top = 0
                   Width = 487
-                  Height = 410
+                  Height = 409
                   Title.Text.Strings = (
                     'TDBChart')
                   Title.Visible = False
@@ -9071,8 +9067,8 @@ inherited FExames: TFExames
     object grp3: TRzGroupBox
       Left = 1157
       Top = 0
-      Width = 154
-      Height = 585
+      Width = 156
+      Height = 584
       Align = alClient
       Caption = 'Anota'#231#245'es do Paciente'
       CaptionFont.Charset = DEFAULT_CHARSET
@@ -9081,18 +9077,18 @@ inherited FExames: TFExames
       CaptionFont.Name = 'Tahoma'
       CaptionFont.Style = [fsBold]
       TabOrder = 1
-      ExplicitWidth = 136
+      ExplicitWidth = 138
       ExplicitHeight = 547
       object mmoPacObs: TRzMemo
         AlignWithMargins = True
         Left = 4
         Top = 17
-        Width = 146
-        Height = 564
+        Width = 148
+        Height = 563
         Align = alClient
         Color = clWhite
         TabOrder = 0
-        ExplicitWidth = 128
+        ExplicitWidth = 130
         ExplicitHeight = 526
       end
     end
@@ -9106,7 +9102,7 @@ inherited FExames: TFExames
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 42471.526632025500000000
-    ReportOptions.LastChange = 42471.658756747700000000
+    ReportOptions.LastChange = 42472.306446782410000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -9133,32 +9129,9 @@ inherited FExames: TFExames
         Height = 188.976377950000000000
         Width = 755.906000000000000000
         Child = frxAudiometria.Child1
-        object Line35: TfrxLineView
-          Left = 321.260050000000000000
-          Height = 188.976377950000000000
-          ShowHint = False
-          Frame.Typ = [ftLeft]
-        end
-        object Memo65: TfrxMemoView
-          Left = 325.039580000000000000
-          Width = 22.677180000000000000
-          Height = 188.976377950000000000
-          ShowHint = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          HAlign = haCenter
-          Memo.UTF8W = (
-            '5,0cm')
-          ParentFont = False
-          Rotation = 90
-          VAlign = vaCenter
-        end
       end
       object Child1: TfrxChild
-        Height = 767.244590000000000000
+        Height = 822.362710000000000000
         Top = 188.976500000000000000
         Width = 755.906000000000000000
         object Shape4: TfrxShapeView
@@ -9807,7 +9780,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '15')
+            '[srtDireita]')
           ParentFont = False
         end
         object Line3: TfrxLineView
@@ -9845,7 +9818,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '15')
+            '[srtEsquerda]')
           ParentFont = False
         end
         object Memo12: TfrxMemoView
@@ -10004,7 +9977,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '100')
+            '[monoDireita]')
           ParentFont = False
         end
         object Memo20: TfrxMemoView
@@ -10035,7 +10008,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '100')
+            '[irfDireita]')
           ParentFont = False
         end
         object Memo22: TfrxMemoView
@@ -10051,7 +10024,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '100')
+            '[dissDireita]')
           ParentFont = False
         end
         object Memo23: TfrxMemoView
@@ -10082,7 +10055,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '15')
+            '[monoEsquerda]')
           ParentFont = False
         end
         object Memo25: TfrxMemoView
@@ -10113,7 +10086,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '15')
+            '[irfEsquerda]')
           ParentFont = False
         end
         object Memo27: TfrxMemoView
@@ -10129,7 +10102,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '15')
+            '[dissEsquerda]')
           ParentFont = False
         end
         object Memo28: TfrxMemoView
@@ -10773,7 +10746,7 @@ inherited FExames: TFExames
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            'Laudo do Ouvido Direito')
+            '[laudoDireita]')
           ParentFont = False
         end
         object Memo63: TfrxMemoView
@@ -10789,7 +10762,7 @@ inherited FExames: TFExames
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            'Laudo do Ouvido Esquerdo')
+            '[laudoEsquerda]')
           ParentFont = False
         end
         object Memo46: TfrxMemoView
@@ -11066,7 +11039,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'D')
+            '[w500]')
           ParentFont = False
         end
         object Memo41: TfrxMemoView
@@ -11082,7 +11055,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'D')
+            '[w1K]')
           ParentFont = False
         end
         object Memo42: TfrxMemoView
@@ -11098,7 +11071,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'E')
+            '[w2K]')
           ParentFont = False
         end
         object Memo43: TfrxMemoView
@@ -11114,7 +11087,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            'D')
+            '[w4K]')
           ParentFont = False
         end
         object Memo51: TfrxMemoView
@@ -11146,7 +11119,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[limiarD500]')
           ParentFont = False
         end
         object Memo53: TfrxMemoView
@@ -11162,7 +11135,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[limiarD1K]')
           ParentFont = False
         end
         object Memo54: TfrxMemoView
@@ -11178,7 +11151,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[limiard2K]')
           ParentFont = False
         end
         object Memo55: TfrxMemoView
@@ -11194,7 +11167,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[limiarD4K]')
           ParentFont = False
         end
         object Memo56: TfrxMemoView
@@ -11210,7 +11183,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[contraD500]')
           ParentFont = False
         end
         object Memo57: TfrxMemoView
@@ -11226,7 +11199,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[contraD1K]')
           ParentFont = False
         end
         object Memo58: TfrxMemoView
@@ -11242,7 +11215,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[contraD2K]')
           ParentFont = False
         end
         object Memo69: TfrxMemoView
@@ -11258,7 +11231,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[contraD4K]')
           ParentFont = False
         end
         object Memo70: TfrxMemoView
@@ -11274,7 +11247,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[diferD500]')
           ParentFont = False
         end
         object Memo71: TfrxMemoView
@@ -11290,7 +11263,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[diferD1K]')
           ParentFont = False
         end
         object Memo72: TfrxMemoView
@@ -11306,7 +11279,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[diferD2K]')
           ParentFont = False
         end
         object Memo73: TfrxMemoView
@@ -11322,7 +11295,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[diferD4K]')
           ParentFont = False
         end
         object Memo74: TfrxMemoView
@@ -11338,7 +11311,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[ipsiD500]')
           ParentFont = False
         end
         object Memo75: TfrxMemoView
@@ -11354,7 +11327,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[ipsiD1K]')
           ParentFont = False
         end
         object Memo76: TfrxMemoView
@@ -11370,7 +11343,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[ipsiD2K]')
           ParentFont = False
         end
         object Memo77: TfrxMemoView
@@ -11386,7 +11359,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[ipsiD4K]')
           ParentFont = False
         end
         object Memo78: TfrxMemoView
@@ -11402,7 +11375,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[decayD500]')
           ParentFont = False
         end
         object Memo79: TfrxMemoView
@@ -11418,7 +11391,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[decayD1K]')
           ParentFont = False
         end
         object Memo80: TfrxMemoView
@@ -11434,7 +11407,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[decayD2K]')
           ParentFont = False
         end
         object Memo81: TfrxMemoView
@@ -11450,7 +11423,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[decayD4K]')
           ParentFont = False
         end
         object Memo82: TfrxMemoView
@@ -11466,7 +11439,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[limiarE500]')
           ParentFont = False
         end
         object Memo83: TfrxMemoView
@@ -11482,7 +11455,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[limiarE1K]')
           ParentFont = False
         end
         object Memo84: TfrxMemoView
@@ -11498,7 +11471,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[limiarE2K]')
           ParentFont = False
         end
         object Memo85: TfrxMemoView
@@ -11514,7 +11487,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[limiarE4K]')
           ParentFont = False
         end
         object Memo86: TfrxMemoView
@@ -11530,7 +11503,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[contraE500]')
           ParentFont = False
         end
         object Memo87: TfrxMemoView
@@ -11546,7 +11519,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[contraE1K]')
           ParentFont = False
         end
         object Memo88: TfrxMemoView
@@ -11562,7 +11535,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[contraE2K]')
           ParentFont = False
         end
         object Memo89: TfrxMemoView
@@ -11578,7 +11551,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[contraE4K]')
           ParentFont = False
         end
         object Memo90: TfrxMemoView
@@ -11594,7 +11567,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[diferE500]')
           ParentFont = False
         end
         object Memo91: TfrxMemoView
@@ -11610,7 +11583,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[diferE1K]')
           ParentFont = False
         end
         object Memo92: TfrxMemoView
@@ -11626,7 +11599,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[diferE2K]')
           ParentFont = False
         end
         object Memo93: TfrxMemoView
@@ -11642,7 +11615,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[diferE4K]')
           ParentFont = False
         end
         object Memo94: TfrxMemoView
@@ -11658,7 +11631,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[ipsiE500]')
           ParentFont = False
         end
         object Memo95: TfrxMemoView
@@ -11674,7 +11647,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[ipsiE1K]')
           ParentFont = False
         end
         object Memo96: TfrxMemoView
@@ -11690,7 +11663,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[ipsiE2K]')
           ParentFont = False
         end
         object Memo97: TfrxMemoView
@@ -11706,7 +11679,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[ipsiE4K]')
           ParentFont = False
         end
         object Memo98: TfrxMemoView
@@ -11722,7 +11695,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[decayE500]')
           ParentFont = False
         end
         object Memo99: TfrxMemoView
@@ -11738,7 +11711,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[decayE1K]')
           ParentFont = False
         end
         object Memo100: TfrxMemoView
@@ -11754,7 +11727,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[decayE2K]')
           ParentFont = False
         end
         object Memo101: TfrxMemoView
@@ -11770,7 +11743,7 @@ inherited FExames: TFExames
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            '25')
+            '[decayE4K]')
           ParentFont = False
         end
         object Line4: TfrxLineView
@@ -11787,36 +11760,76 @@ inherited FExames: TFExames
           ShowHint = False
           Frame.Typ = [ftLeft]
         end
-      end
-      object PageFooter1: TfrxPageFooter
-        Height = 94.488188980000000000
-        Top = 994.016390000000000000
-        Width = 755.906000000000000000
-        object Line34: TfrxLineView
-          Left = 321.260050000000000000
-          Top = 22.676813860000000000
-          Height = 94.488188980000000000
-          ShowHint = False
-          Frame.Typ = [ftLeft]
-        end
         object Memo64: TfrxMemoView
-          Left = 325.039580000000000000
-          Top = 22.676813860000000000
-          Width = 22.677180000000000000
-          Height = 94.488188980000000000
+          Left = 452.000000000000000000
+          Top = 793.023500000000000000
+          Width = 302.488250000000000000
+          Height = 26.897650000000000000
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Style = []
+          Frame.Typ = [ftTop]
           HAlign = haCenter
           Memo.UTF8W = (
-            '2,5cm')
+            '[Medico]'
+            '[CRF]')
           ParentFont = False
-          Rotation = 90
-          VAlign = vaCenter
         end
+        object Memo65: TfrxMemoView
+          Left = 9.000000000000000000
+          Top = 793.023500000000000000
+          Width = 429.488250000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haRight
+          Memo.UTF8W = (
+            '[Cidade], [Data]')
+          ParentFont = False
+        end
+        object Memo102: TfrxMemoView
+          Left = 120.000000000000000000
+          Top = 15.118120000000000000
+          Width = 412.488250000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          Memo.UTF8W = (
+            '[Paciente]')
+          ParentFont = False
+        end
+        object Memo103: TfrxMemoView
+          Left = 629.000000000000000000
+          Top = 15.118120000000000000
+          Width = 101.488250000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[Data]')
+          ParentFont = False
+        end
+      end
+      object PageFooter1: TfrxPageFooter
+        Height = 94.488188980000000000
+        Top = 1050.709340000000000000
+        Width = 755.906000000000000000
       end
     end
   end
