@@ -28,6 +28,7 @@ type
     gdt1: TJvGradient;
     lbl8: TLabel;
     grdConsulta: TNextGrid;
+    btnClose: TAdvGlowButton;
     procedure btnSelecionarClick(Sender: TObject);
     procedure grdConsultaDblClick(Sender: TObject);
     procedure grdConsultaKeyDown(Sender: TObject; var Key: Word;
@@ -36,6 +37,7 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure btnFiltroClick(Sender: TObject);
     procedure edtDescricaoKeyPress(Sender: TObject; var Key: Char);
+    procedure btnCloseClick(Sender: TObject);
   private
     FColunaRetorno: Integer;
     FSQL: string;
@@ -54,6 +56,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFConPadrao.btnCloseClick(Sender: TObject);
+begin
+  Close;
+end;
 
 procedure TFConPadrao.btnFiltroClick(Sender: TObject);
 begin

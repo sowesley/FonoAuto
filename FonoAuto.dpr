@@ -27,7 +27,8 @@ uses
   UExames in 'Forms\UExames.pas' {FExames},
   obj.Audiometria in 'Classes\obj.Audiometria.pas',
   UUsuarios in 'Forms\UUsuarios.pas' {FUsuarios},
-  Obj.Usuarios in 'Classes\Obj.Usuarios.pas';
+  Obj.Usuarios in 'Classes\Obj.Usuarios.pas',
+  obj.Clinicas in 'Classes\obj.Clinicas.pas';
 
 {$R *.res}
 

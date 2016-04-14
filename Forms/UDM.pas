@@ -47,6 +47,7 @@ begin
       TSessao.Instance.Config.MenuAtivo       := Ini.ReadInteger('Parametros', 'MenuAtivo', 0) = 1;
       TSessao.Instance.Config.Logotipo        := Ini.ReadString('Parametros', 'Logotipo', '');
       TSessao.Instance.Config.MaxTempoReserva := Ini.ReadInteger('Parametros', 'MaxTempoReserva', 1);
+      TSessao.Instance.Config.ClinicaPadrao   := Ini.ReadString('Parametros', 'ClinicaPadrao', '1');
     finally
       FreeAndNil(Ini);
     end;

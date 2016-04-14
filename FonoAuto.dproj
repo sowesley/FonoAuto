@@ -73,6 +73,7 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <DCC_ExeOutput>C:\Users\Wesley\Documents\SistemaFono\App\</DCC_ExeOutput>
         <VerInfo_MajorVer>2016</VerInfo_MajorVer>
         <VerInfo_Build>1</VerInfo_Build>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
@@ -158,6 +159,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Classes\Obj.Usuarios.pas"/>
+        <DCCReference Include="Classes\obj.Clinicas.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

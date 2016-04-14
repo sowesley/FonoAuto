@@ -39,6 +39,50 @@ inherited FConPadrao: TFConPadrao
       LabelAlignment = taLeftJustify
       Align = alTop
       TabOrder = 0
+      object btnClose: TAdvGlowButton
+        AlignWithMargins = True
+        Left = 426
+        Top = 5
+        Width = 21
+        Height = 15
+        Hint = 'FILTRO'
+        Margins.Top = 5
+        Margins.Bottom = 5
+        Align = alRight
+        Caption = 'X'
+        NotesFont.Charset = DEFAULT_CHARSET
+        NotesFont.Color = clWindowText
+        NotesFont.Height = -11
+        NotesFont.Name = 'Tahoma'
+        NotesFont.Style = []
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 0
+        OnClick = btnCloseClick
+        Appearance.Color = 9549311
+        Appearance.ColorTo = 9549311
+        Appearance.ColorChecked = 16111818
+        Appearance.ColorCheckedTo = 16367008
+        Appearance.ColorDisabled = 15921906
+        Appearance.ColorDisabledTo = 15921906
+        Appearance.ColorDown = 16111818
+        Appearance.ColorDownTo = 16367008
+        Appearance.ColorHot = 16117985
+        Appearance.ColorHotTo = 16372402
+        Appearance.ColorMirror = 33023
+        Appearance.ColorMirrorTo = 9549311
+        Appearance.ColorMirrorHot = 16107693
+        Appearance.ColorMirrorHotTo = 16775412
+        Appearance.ColorMirrorDown = 16102556
+        Appearance.ColorMirrorDownTo = 16768988
+        Appearance.ColorMirrorChecked = 16102556
+        Appearance.ColorMirrorCheckedTo = 16768988
+        Appearance.ColorMirrorDisabled = 11974326
+        Appearance.ColorMirrorDisabledTo = 15921906
+        ExplicitLeft = 428
+        ExplicitTop = 30
+        ExplicitHeight = 18
+      end
     end
     object edtDescricao: TRzEdit
       Left = 8

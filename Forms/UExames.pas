@@ -10,7 +10,8 @@ uses
   htmlbtns, VclTee.TeeGDIPlus, VCLTee.TeEngine, VCLTee.TeeProcs,
   VCLTee.Chart, VCLTee.Series, JvExControls, JvChart, Data.DB,
   Datasnap.DBClient, VCLTee.DBChart, Utils.Message, Utils.Types,
-  dxGDIPlusClasses, obj.Audiometria, AdvScrollBox, RzTabs, frxClass;
+  dxGDIPlusClasses, obj.Audiometria, AdvScrollBox, RzTabs, frxClass,
+  frxDBSet;
 
 type
   TFExames = class(TFDefault)
@@ -291,11 +292,8 @@ type
     pnl30: TRzPanel;
     RzGroupBox1: TRzGroupBox;
     RzPanel12: TRzPanel;
-    RzGroupBox2: TRzGroupBox;
-    RzPanel11: TRzPanel;
     chtImitaDireito: TDBChart;
     srsImitanciometriaDireita: TFastLineSeries;
-    chtImitaEsquerdo: TDBChart;
     srsImitanciometriaEsquerda: TFastLineSeries;
     edtPpoD: TCurvyEdit;
     lbl11: TLabel;
@@ -354,12 +352,9 @@ type
     edtLimiarD2K: TCurvyEdit;
     edtLimiarD1K: TCurvyEdit;
     edtLimiarD500: TCurvyEdit;
-    grp3: TRzGroupBox;
-    mmoPacObs: TRzMemo;
     chtDireita: TDBChart;
     srsAudioDireita: TFastLineSeries;
     srsMark0Direita: TFastLineSeries;
-    srsMark0Esquerda: TFastLineSeries;
     srsVAD: TFastLineSeries;
     chtEsquerda: TDBChart;
     srsAudioEsquerda: TFastLineSeries;
@@ -372,6 +367,16 @@ type
     edtPngE: TCurvyEdit;
     edtCmpE: TCurvyEdit;
     btnAceiteEsquerdo: TAdvGlowButton;
+    cdsRelatorio: TClientDataSet;
+    dsRelatorio: TfrxDBDataset;
+    cdsRelatorioLAUDO_D: TMemoField;
+    cdsRelatorioLAUDO_E: TMemoField;
+    grp3: TRzGroupBox;
+    mmoPacObs: TRzMemo;
+    lbl17: TLabel;
+    edtMedCod: TRzButtonEdit;
+    edtMedNome: TRzEdit;
+    edtMedRegistro: TRzEdit;
     procedure edtPacCodButtonClick(Sender: TObject);
     procedure edtPacCodKeyPress(Sender: TObject; var Key: Char);
     procedure edtPacCodEnter(Sender: TObject);
@@ -423,6 +428,8 @@ type
     procedure mmoLaudoDireitoExit(Sender: TObject);
     procedure edtPpoEExit(Sender: TObject);
     procedure edtCmpEExit(Sender: TObject);
+    procedure pgcExamesChanging(Sender: TObject; NewIndex: Integer;
+      var AllowChange: Boolean);
   private
     FSource: TMarcador;
     FDestination: TMarcador;
@@ -737,7 +744,17 @@ var
   vFileName: string;
   Img: TfrxPictureView;
 begin
-  frxAudiometria.LoadFromFile(Sessao.Config.CaminhoRelatorios + 'Audiometria.fr3');
+  cdsRelatorio.Close;
+  cdsRelatorio.CreateDataSet;
+  cdsRelatorio.Open;
+
+  cdsRelatorio.Append;
+  cdsRelatorioLAUDO_D.AsString := mmoLaudoDireito.Text;
+  cdsRelatorioLAUDO_E.AsString := mmoLaudoEsquerdo.Text;
+  cdsRelatorio.Post;
+
+  frxAudiometria.LoadFromFile(Sessao.Config.CaminhoRelatorios + 'Audiometria.fr3', True);
+//  frxAudiometria.LoadFromFile(gsAppPath + 'Relatorios\Audiometria.fr3', True);
   vPath := Sessao.Config.CaminhoGraficos;
 
   if not DirectoryExists(vPath) then
@@ -791,6 +808,7 @@ begin
     Img.Picture.LoadFromFile(vPath + vFileName);
 
   frxAudiometria.Variables['Paciente']      := QuotedStr(Trim(edtPacNome.Text));
+  frxAudiometria.Variables['Idade']         := QuotedStr(Trim(edtPacIdade.Text));
   frxAudiometria.Variables['Data']          := QuotedStr(edtData.Text);
   frxAudiometria.Variables['srtDireita']    := QuotedStr(Trim(edtSRTDireito.Text));
   frxAudiometria.Variables['srtEsquerda']   := QuotedStr(Trim(edtSRTEsquerdo.Text));
@@ -804,8 +822,6 @@ begin
   frxAudiometria.Variables['w1K']           := QuotedStr(Trim(edtWeber1K.Text));
   frxAudiometria.Variables['w2K']           := QuotedStr(Trim(edtWeber2K.Text));
   frxAudiometria.Variables['w4K']           := QuotedStr(Trim(edtWeber4K.Text));
-  frxAudiometria.Variables['laudoDireita']  := QuotedStr(Trim(mmoLaudoDireito.Text));
-  frxAudiometria.Variables['laudoEsquerda'] := QuotedStr(Trim(mmoLaudoEsquerdo.Text));
   frxAudiometria.Variables['Cidade']        := QuotedStr('Colatina-ES');
   frxAudiometria.Variables['Medico']        := QuotedStr('ERIKA F. G. TASCA');
   frxAudiometria.Variables['CRF']           := QuotedStr('CRFa 3288-ES');
@@ -983,7 +999,7 @@ begin
   TCurvyEdit(Sender).BorderColor := clGray;
   TCurvyEdit(Sender).Color       := $00DFDFDF;
   TCurvyEdit(Sender).Font.Color  := clBlack;
-  TCurvyEdit(Sender).Font.Style  := [];
+  TCurvyEdit(Sender).Font.Style  := [fsBold];
 
   NovoTipo       := getReflexo(UpperCase(TCurvyEdit(Sender).Name));
   NovaFrequencia := getFrequencia(TCurvyEdit(Sender).Name);
@@ -1031,7 +1047,7 @@ begin
   TCurvyEdit(Sender).BorderColor := clGray;
   TCurvyEdit(Sender).Color       := $00DFDFDF;
   TCurvyEdit(Sender).Font.Color  := clBlack;
-  TCurvyEdit(Sender).Font.Style  := [];
+  TCurvyEdit(Sender).Font.Style  := [fsBold];
 
   NovoTipo       := getReflexo(UpperCase(TCurvyEdit(Sender).Name));
   NovaFrequencia := getFrequencia(TCurvyEdit(Sender).Name);
@@ -1133,7 +1149,7 @@ begin
   if Valor <> -1 then
   begin
     Dado := TImitanciometria.Create;
-    Dado.Orelha := oDireita;
+    Dado.Orelha := oEsquerda;
     Dado.Valor  := Valor;
     Dado.Tipo   := NovoTipo;
 
@@ -1858,7 +1874,7 @@ begin
   if Valor <> -1 then
   begin
     Dado := TImitanciometria.Create;
-    Dado.Orelha := oDireita;
+    Dado.Orelha := oEsquerda;
     Dado.Valor  := Valor;
     Dado.Tipo   := NovoTipo;
 
@@ -1959,7 +1975,6 @@ begin
   ResetDados;
 
   srsMark0Direita.LinePen.Color  := clBlack;
-  srsMark0Esquerda.LinePen.Color := clBlack;
   srsAudioDireita.LinePen.Color  := $000000D5;
   srsAudioEsquerda.LinePen.Color := $00D50000;
 end;
@@ -2058,6 +2073,16 @@ begin
   Self.KeyPreview := True;
 end;
 
+procedure TFExames.pgcExamesChanging(Sender: TObject; NewIndex: Integer; var AllowChange: Boolean);
+begin
+  AllowChange := True;
+
+  if NewIndex = tsAudiometria.TabIndex then
+    btnImprimir.Show
+  else
+    btnImprimir.Hide;
+end;
+
 procedure TFExames.PopulaDados;
 var
   I: Integer;
@@ -2098,46 +2123,126 @@ begin
             trLimiar:
               begin
                 case Reflexo.Frequencia of
-                  f500: edtLimiarD500.Text := Reflexo.Valor.ToString;
-                  f1K : edtLimiarD1K.Text := Reflexo.Valor.ToString;
-                  f2K : edtLimiarD2K.Text := Reflexo.Valor.ToString;
-                  f4K : edtLimiarD4K.Text := Reflexo.Valor.ToString;
+                  f500:
+                    begin
+                      edtLimiarD500.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtLimiarD500);
+                    end;
+                  f1K:
+                    begin
+                      edtLimiarD1K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtLimiarD1K);
+                    end;
+                  f2K:
+                    begin
+                      edtLimiarD2K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtLimiarD2K);
+                    end;
+                  f4K:
+                    begin
+                      edtLimiarD4K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtLimiarD4K);
+                    end;
                 end;
               end;
             trAFContra:
               begin
                 case Reflexo.Frequencia of
-                  f500: edtAFDContra500.Text := Reflexo.Valor.ToString;
-                  f1K : edtAFDContra1K.Text := Reflexo.Valor.ToString;
-                  f2K : edtAFDContra2K.Text := Reflexo.Valor.ToString;
-                  f4K : edtAFDContra4K.Text := Reflexo.Valor.ToString;
+                  f500:
+                    begin
+                      edtAFDContra500.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtAFDContra500);
+                    end;
+                  f1K :
+                    begin
+                      edtAFDContra1K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtAFDContra1K);
+                    end;
+                  f2K :
+                    begin
+                      edtAFDContra2K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtAFDContra2K);
+                    end;
+                  f4K :
+                    begin
+                      edtAFDContra4K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtAFDContra4K);
+                    end;
                 end;
               end;
             trDifer:
               begin
                 case Reflexo.Frequencia of
-                  f500: edtDiferD500.Text := Reflexo.Valor.ToString;
-                  f1K : edtDiferD1K.Text := Reflexo.Valor.ToString;
-                  f2K : edtDiferD2K.Text := Reflexo.Valor.ToString;
-                  f4K : edtDiferD4K.Text := Reflexo.Valor.ToString;
+                  f500:
+                    begin
+                      edtDiferD500.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtDiferD500);
+                    end;
+                  f1K :
+                    begin
+                      edtDiferD1K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtDiferD1K);
+                    end;
+                  f2K :
+                    begin
+                      edtDiferD2K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtDiferD2K);
+                    end;
+                  f4K :
+                    begin
+                      edtDiferD4K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtDiferD4K);
+                    end;
                 end;
               end;
             trAFIpsi:
               begin
                 case Reflexo.Frequencia of
-                  f500: edtAFDIpsi500.Text := Reflexo.Valor.ToString;
-                  f1K : edtAFDIpsi1K.Text := Reflexo.Valor.ToString;
-                  f2K : edtAFDIpsi2K.Text := Reflexo.Valor.ToString;
-                  f4K : edtAFDIpsi4K.Text := Reflexo.Valor.ToString;
+                  f500:
+                    begin
+                      edtAFDIpsi500.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtAFDIpsi500);
+                    end;
+                  f1K :
+                    begin
+                      edtAFDIpsi1K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtAFDIpsi1K);
+                    end;
+                  f2K :
+                    begin
+                      edtAFDIpsi2K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtAFDIpsi2K);
+                    end;
+                  f4K :
+                    begin
+                      edtAFDIpsi4K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtAFDIpsi4K);
+                    end;
                 end;
               end;
             trDecay:
               begin
                 case Reflexo.Frequencia of
-                  f500: edtDecayD500.Text := Reflexo.Valor.ToString;
-                  f1K : edtDecayD1K.Text := Reflexo.Valor.ToString;
-                  f2K : edtDecayD2K.Text := Reflexo.Valor.ToString;
-                  f4K : edtDecayD4K.Text := Reflexo.Valor.ToString;
+                  f500:
+                    begin
+                      edtDecayD500.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtDecayD500);
+                    end;
+                  f1K :
+                    begin
+                      edtDecayD1K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtDecayD1K);
+                    end;
+                  f2K :
+                    begin
+                      edtDecayD2K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtDecayD2K);
+                    end;
+                  f4K :
+                    begin
+                      edtDecayD4K.Text := Reflexo.Valor.ToString;
+                      edtLimiarD500Exit(edtDecayD4K);
+                    end;
                 end;
               end;
           end;
@@ -2148,46 +2253,126 @@ begin
             trLimiar:
               begin
                 case Reflexo.Frequencia of
-                  f500: edtLimiarE500.Text := Reflexo.Valor.ToString;
-                  f1K : edtLimiarE1K.Text := Reflexo.Valor.ToString;
-                  f2K : edtLimiarE2K.Text := Reflexo.Valor.ToString;
-                  f4K : edtLimiarE4K.Text := Reflexo.Valor.ToString;
+                  f500:
+                    begin
+                      edtLimiarE500.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtLimiarE500);
+                    end;
+                  f1K :
+                    begin
+                      edtLimiarE1K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtLimiarE1K);
+                    end;
+                  f2K :
+                    begin
+                      edtLimiarE2K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtLimiarE2K);
+                    end;
+                  f4K :
+                    begin
+                      edtLimiarE4K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtLimiarE4K);
+                    end;
                 end;
               end;
             trAFContra:
               begin
                 case Reflexo.Frequencia of
-                  f500: edtAFEContra500.Text := Reflexo.Valor.ToString;
-                  f1K : edtAFEContra1K.Text := Reflexo.Valor.ToString;
-                  f2K : edtAFEContra2K.Text := Reflexo.Valor.ToString;
-                  f4K : edtAFEContra4K.Text := Reflexo.Valor.ToString;
+                  f500:
+                    begin
+                      edtAFEContra500.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtAFEContra500);
+                    end;
+                  f1K :
+                    begin
+                      edtAFEContra1K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtAFEContra1K);
+                    end;
+                  f2K :
+                    begin
+                      edtAFEContra2K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtAFEContra2K);
+                    end;
+                  f4K :
+                    begin
+                      edtAFEContra4K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtAFEContra4K);
+                    end;
                 end;
               end;
             trDifer:
               begin
                 case Reflexo.Frequencia of
-                  f500: edtDiferE500.Text := Reflexo.Valor.ToString;
-                  f1K : edtDiferE1K.Text := Reflexo.Valor.ToString;
-                  f2K : edtDiferE2K.Text := Reflexo.Valor.ToString;
-                  f4K : edtDiferE4K.Text := Reflexo.Valor.ToString;
+                  f500:
+                    begin
+                      edtDiferE500.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtDiferE500);
+                    end;
+                  f1K :
+                    begin
+                      edtDiferE1K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtDiferE1K);
+                    end;
+                  f2K :
+                    begin
+                      edtDiferE2K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtDiferE2K);
+                    end;
+                  f4K :
+                    begin
+                      edtDiferE4K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtDiferE4K);
+                    end;
                 end;
               end;
             trAFIpsi:
               begin
                 case Reflexo.Frequencia of
-                  f500: edtAFEIpsi500.Text := Reflexo.Valor.ToString;
-                  f1K : edtAFEIpsi1K.Text := Reflexo.Valor.ToString;
-                  f2K : edtAFEIpsi2K.Text := Reflexo.Valor.ToString;
-                  f4K : edtAFEIpsi4K.Text := Reflexo.Valor.ToString;
+                  f500:
+                    begin
+                      edtAFEIpsi500.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtAFEIpsi500);
+                    end;
+                  f1K :
+                    begin
+                      edtAFEIpsi1K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtAFEIpsi1K);
+                    end;
+                  f2K :
+                    begin
+                      edtAFEIpsi2K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtAFEIpsi2K);
+                    end;
+                  f4K :
+                    begin
+                      edtAFEIpsi4K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtAFEIpsi4K);
+                    end;
                 end;
               end;
             trDecay:
               begin
                 case Reflexo.Frequencia of
-                  f500: edtDecayE500.Text := Reflexo.Valor.ToString;
-                  f1K : edtDecayE1K.Text := Reflexo.Valor.ToString;
-                  f2K : edtDecayE2K.Text := Reflexo.Valor.ToString;
-                  f4K : edtDecayE4K.Text := Reflexo.Valor.ToString;
+                  f500:
+                    begin
+                      edtDecayE500.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtDecayE500);
+                    end;
+                  f1K :
+                    begin
+                      edtDecayE1K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtDecayE1K);
+                    end;
+                  f2K :
+                    begin
+                      edtDecayE2K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtDecayE2K);
+                    end;
+                  f4K :
+                    begin
+                      edtDecayE4K.Text := Reflexo.Valor.ToString;
+                      edtLimiarE500Exit(edtDecayE4K);
+                    end;
                 end;
               end;
           end;
@@ -2206,16 +2391,19 @@ begin
             tdmPressaoNegativa:
               begin
                 edtPngD.Text := Imita.Valor.ToString;
+                edtPpoDExit(edtPngD);
                 srsImitanciometriaDireita.AddXY(-Imita.Valor, 0);
               end;
             tdmPressaoPositiva:
               begin
                 edtPpoD.Text := Imita.Valor.ToString;
+                edtPpoDExit(edtPpoD);
                 srsImitanciometriaDireita.AddXY(Imita.Valor, 0);
               end;
             tdmComplascencia:
               begin
                 edtCmpD.Text := Imita.Valor.ToString;
+                edtCmpDExit(edtCmpD);
                 srsImitanciometriaDireita.AddXY(0, Imita.Valor);
               end;
           end;
@@ -2226,16 +2414,19 @@ begin
             tdmPressaoNegativa:
               begin
                 edtPngE.Text := Imita.Valor.ToString;
+                edtPpoEExit(edtPngE);
                 srsImitanciometriaEsquerda.AddXY(-Imita.Valor, 0);
               end;
             tdmPressaoPositiva:
               begin
                 edtPpoE.Text := Imita.Valor.ToString;
+                edtPpoEExit(edtPpoE);
                 srsImitanciometriaEsquerda.AddXY(Imita.Valor, 0);
               end;
             tdmComplascencia:
               begin
                 edtCmpE.Text := Imita.Valor.ToString;
+                edtCmpEExit(edtCmpE);
                 srsImitanciometriaEsquerda.AddXY(0, Imita.Valor);
               end;
           end;

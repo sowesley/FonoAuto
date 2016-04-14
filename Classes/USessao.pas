@@ -14,6 +14,7 @@ type
     FLogotipo: string;
     FMenuAtivo: Boolean;
     FMaxTempoReserva: Integer;
+    FClinicaPadrao: string;
     procedure setCaminhoBanco(const Value: string);
     procedure setSenha(const Value: string);
     procedure setServidor(const Value: string);
@@ -25,6 +26,7 @@ type
     function getCaminhoApp: string;
     function getCaminhoRelatorios: string;
     function getCaminhoGraficos: string;
+    procedure SetClinicaPadrao(const Value: string);
   public
     property Servidor: string read FServidor write setServidor;
     property Usuario: string read FUsuario write setUsuario;
@@ -33,6 +35,7 @@ type
     property MenuAtivo: Boolean read FMenuAtivo write SetMenuAtivo;
     property Logotipo: string read FLogotipo write SetLogotipo;
     property MaxTempoReserva: Integer read FMaxTempoReserva write SetMaxTempoReserva;
+    property ClinicaPadrao: string read FClinicaPadrao write SetClinicaPadrao;
     property CaminhoImagens: string read getCaminhoImagens;
     property CaminhoApp: string read getCaminhoApp;
     property CaminhoRelatorios: string read getCaminhoRelatorios;
@@ -181,6 +184,11 @@ end;
 procedure TConfig.setCaminhoBanco(const Value: string);
 begin
   FCaminhoBanco := Value;
+end;
+
+procedure TConfig.SetClinicaPadrao(const Value: string);
+begin
+  FClinicaPadrao := Value;
 end;
 
 procedure TConfig.SetLogotipo(const Value: string);
