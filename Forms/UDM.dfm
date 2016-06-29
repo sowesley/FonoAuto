@@ -5,9 +5,13 @@ object DM: TDM
   Width = 475
   object conexao: TUniConnection
     ProviderName = 'InterBase'
-    Database = 'C:\Users\Wesley\Documents\fonoauto\BD\ERIKA.FDB'
+    Database = 'D:\Wesley\fonoauto\BD\ERIKA.FDB'
+    SpecificOptions.Strings = (
+      'InterBase.Charset=ISO8859_1'
+      'InterBase.ClientLibrary=fbclient.dll')
     Username = 'sysdba'
     Server = 'localhost'
+    Connected = True
     LoginPrompt = False
     Left = 24
     Top = 16
